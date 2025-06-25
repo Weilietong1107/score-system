@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>舞台技术部考核打分系统</title>
+  <style>
+    body { font-family: 'Microsoft YaHei', sans-serif; padding: 20px; background: #f4f4f4; }
+    .container { max-width: 500px; margin: auto; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+    h2 { text-align: center; color: #333; }
+    label { display: block; margin-top: 15px; }
+    input, select { width: 100%; padding: 10px; margin-top: 5px; border: 1px solid #ccc; border-radius: 5px; }
+    .result { margin-top: 20px; font-weight: bold; font-size: 1.1em; text-align: center; }
+    .footer { margin-top: 30px; text-align: center; font-size: 0.9em; color: #999; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>舞台技术部考核打分系统</h2>
+
+    <label for="name">姓名：</label>
+    <input type="text" id="name">
+
+    <label for="position">岗位：</label>
+    <select id="position">
+      <option value="">请选择</option>
+      <option>灯光设计</option>
+      <option>灯光技术</option>
+      <option>舞台机械</option>
+      <option>舞美道具制作</option>
+      <option>音响技术</option>
+      <option>视频技术</option>
+      <option>服装技术</option>
+    </select>
+
+    <label for="written">笔试成绩（满分100）：</label>
+    <input type="number" id="written" max="100" min="0">
+
+    <label for="practical">实操成绩（满分50）：</label>
+    <input type="number" id="practical" max="50" min="0">
+
+    <label for="attitude">态度评分等级：</label>
+    <select id="attitude">
+      <option value="">请选择</option>
+      <option value="3">A+</option>
+      <option value="2">A</option>
+      <option value="1">A-</option>
+      <option value="0">B+</option>
+      <option value="0">B</option>
+      <option value="-1">B-</option>
+      <option value="-2">C+</option>
+      <option value="-3">C</option>
+      <option value="-4">C-</option>
+      <option value="-5">D+</option>
+      <option value="-6">D</option>
+      <option value="-7">D-</option>
+    </select>
+
+    <div class="result" id="result"></div>
+
+    <script>
+      const inputs = document.querySelectorAll("#written, #practical, #attitude");
+      inputs.forEach(input => input.addEventListener("input", calculate));
+
+      function calculate() {
+        const written = parseFloat(document.getElementById("written").value) || 0;
+        const practical = parseFloat(document.getElementById("practical").value) || 0;
+        const attitude = parseFloat(document.getElementById("attitude").value) || 0;
+        const total = written + practical + attitude;
+
+        let grade = "";
+        if (total >= 130) grade = "优秀";
+        else if (total >= 115) grade = "良好";
+        else if (total >= 95) grade = "合格";
+        else grade = "需提升";
+
+        document.getElementById("result").innerHTML = `总分：<strong>${total.toFixed(1)}</strong>，评级：<strong>${grade}</strong>`;
+      }
+    </script>
+
+    <div class="footer">© 申演文化 & 上海杂技团</div>
+  </div>
+</body>
+</html>
